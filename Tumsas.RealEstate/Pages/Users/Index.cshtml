@@ -1,0 +1,80 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Users";
+}
+@section Styles {
+}
+@section Scripts {
+    <script src="~/js/user.js"></script>
+}
+<!-- Data Table -->
+<table id="userTable" class="table table-striped table-hover table-responsive-lg border" style="margin-top: 2%">
+    <caption><strong>User List</strong></caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">
+                <button type="button" id="newUser" class="btn btn-primary small" data-toggle="modal">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!-- Add/Edit Modal -->
+<div class="modal fade" id="userEditModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="userModalLabel">Add/Edit User</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="userForm" role="form" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group" hidden>
+                        <input type="hidden" class="form-control" asp-for="User.Id">
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="User.FirstName" class="row-form-label">First Name *</label>
+                        <input type="text" class="form-control" asp-for="User.FirstName">
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="User.LastName" class="row-form-label">Last Name *</label>
+                        <input type="text" class="form-control" asp-for="User.LastName">
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="User.Email" class="col-form-label">Email *</label>
+                        <input type="email" class="form-control" asp-for="User.Email" min="5">
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="User.PhoneNumber" class="row-form-label">Phone Number</label>
+                        <input type="tel" class="form-control" asp-for="User.PhoneNumber">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="User.Password" class="row-form-label">Password *</label>
+                        <input type="password" class="form-control" asp-for="User.Password" autocomplete="off">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChanges" form="userForm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

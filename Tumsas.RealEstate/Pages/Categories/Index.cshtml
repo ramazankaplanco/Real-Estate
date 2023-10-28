@@ -1,0 +1,71 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Categories";
+}
+@section Styles {
+}
+@section Scripts {
+    <script src="~/js/category.js"></script>
+}
+<!-- Data Table -->
+<table id="categoryTable" class="table table-striped table-hover table-responsive-lg border" style="margin-top: 2%">
+    <caption><strong>Category List</strong></caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Parent</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">
+                <button type="button" id="newCategory" class="btn btn-primary small" data-toggle="modal">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!-- Add/Edit Modal -->
+<div class="modal fade" id="categoryEditModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="modal-title" id="categoryModalLabel">Add/Edit Category</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="categoryForm" role="form" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group" hidden>
+                        <input type="hidden" class="form-control" asp-for="Category.Id">
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="Category.ParentId" class="row-form-label">Parent</label>
+                        <select class="form-control" asp-for="Category.ParentId" asp-items="Model.ParentLookupList"></select>
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="Category.Title" class="row-form-label">Title *</label>
+                        <input type="text" class="form-control" asp-for="Category.Title">
+                    </div>
+
+                    <div class="form-group mb-1">
+                        <label asp-for="Category.Description" class="col-form-label">Description</label>
+                        <input type="text" class="form-control" asp-for="Category.Description">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="saveChanges" form="categoryForm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
